@@ -1,4 +1,4 @@
-config	pullrod	a_arm
+config	pullrod	a_arm	no_axle
 lower_a	-184.15	139.7	190.5	3.175	139.7	574.675
 lower_f	120.65	139.7	190.5	3.175	139.7	574.675
 upper_a	-184.15	311.15	241.3	1.27	333.375	546.1

@@ -6,6 +6,7 @@ import csv
 
 pullrod = False
 indirect_arm = False
+has_axle = False
 
 members = {}
 member_vectors = {}
@@ -20,6 +21,8 @@ with open('front_007.tsv','r') as tsv:
 				pullrod = True
 			if row[2] == 'a_arm':
 				indirect_arm = True
+			if row[3] == 'has_axle':
+				has_axle = True
 		elif row[0] == 'wheel':
 			wheel_center = np.array(row[1:4]).astype(np.float)
 			wheel_radius = float(row[4])
@@ -58,7 +61,7 @@ if indirect_arm:
 		i+=1
 
 	b[0:3] = F.reshape((3,1))
-	b[3:6] = np.cross(contact_point, F).reshape((3,1))
+	b[3:6] = np.cross(wheel_center if has_axle else contact_point, F).reshape((3,1))
 
 	A[0,3] = 1
 	A[1,4] = 1
@@ -99,7 +102,7 @@ else:
 		i+=1
 
 	b[0:3] = F.reshape((3,1))
-	b[3:6] = np.cross(contact_point, F).reshape((3,1))
+	b[3:6] = np.cross(wheel_center if has_axle else contact_point, F).reshape((3,1))
 
 	x = solve(A, b)
 	i = 0
